@@ -14,14 +14,14 @@ const handler = NextAuth({
 
     },
     async singIn({ profile }) {
-try {
-    await connectToDB();
+        try {
+            await connectToDB();
 
-    return true;
-} catch (error) {
-    console.log(error)
-    return false;
-}
+            return true;
+        } catch (error) {
+            console.log(error)
+            return false;
+        }
     }
 })
 
