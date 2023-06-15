@@ -12,14 +12,18 @@ const handler = NextAuth({
         })
     ],
     async session({ session }) {
-
+        const sessionUser = await User.findOne({
+            email: session.user.email
+        })
+        session.user.id = sessionUser._id.toString();
+        return session;
     },
     async singIn({ profile }) {
         try {
             await connectToDB();
-            const userExists = await User.findOne({email: profile.email});
+            const userExists = await User.findOne({ email: profile.email });
 
-            if(!userExists){
+            if (!userExists) {
                 await User.create({
                     email: profile.email,
                     username: profile.name.replace(" ", "").toLowerCase(),
